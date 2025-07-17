@@ -83,7 +83,7 @@
                         <i class="fas fa-bars"></i>
                     </button>
                     <div>
-                        <h1>Dashboard</h1>
+                    <h1>Dashboard</h1>
                         <div class="breadcrumbs">
                             <a href="#dashboard">Dashboard</a>
                             <span class="separator">/</span>
@@ -92,16 +92,6 @@
                     </div>
                 </div>
                 <div class="header-right">
-                    <div class="quick-actions">
-                        <a href="#produtos" class="quick-action-btn">
-                            <i class="fas fa-plus"></i>
-                            Novo Produto
-                        </a>
-                        <a href="#pedidos" class="quick-action-btn primary">
-                            <i class="fas fa-eye"></i>
-                            Ver Pedidos
-                        </a>
-                    </div>
                     <div class="notification-bell">
                         <i class="fas fa-bell"></i>
                         <span class="notification-count">3</span>
@@ -115,6 +105,26 @@
                     </div>
                 </div>
             </header>
+
+            <!-- Desktop Quick Actions Bar -->
+            <div class="desktop-quick-actions">
+                <div class="left-actions">
+                    <a href="#produtos" class="quick-action-btn">
+                        <i class="fas fa-plus"></i>
+                        Novo Produto
+                    </a>
+                    <a href="#pedidos" class="quick-action-btn primary">
+                        <i class="fas fa-eye"></i>
+                        Ver Pedidos
+                    </a>
+                </div>
+                <div class="right-actions">
+                    <span style="color: var(--gray-500); font-size: 0.875rem;">
+                        <i class="fas fa-clock"></i>
+                        Última atualização: agora
+                    </span>
+                </div>
+            </div>
 
             <!-- Dashboard Content -->
             <div class="content-wrapper" id="dashboard">
@@ -751,7 +761,7 @@
                             </div>
                             <button type="submit" class="btn-primary">Salvar Configurações</button>
                         </form>
-                    </div>
+                </div>
 
                     <div class="settings-card">
                         <div class="settings-header">
@@ -1020,5 +1030,4 @@
 
     <script src="../assets/js/admin.js"></script>
 </body>
-</html> 
 </html> 

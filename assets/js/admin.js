@@ -136,6 +136,7 @@ function updateHeaderInfo(linkElement) {
     }
     
     // Update quick actions based on section
+    const section = linkElement.getAttribute('href').replace('#', '');
     updateQuickActions(section);
 }
 

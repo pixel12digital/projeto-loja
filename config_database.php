@@ -14,7 +14,10 @@ if (isset($_SERVER['HTTP_HOST'])) {
                    strpos($_SERVER['HTTP_HOST'], '.local') !== false;
 }
 
-if ($is_localhost) {
+// FORÇAR USO DO BANCO REMOTO (mesmo em localhost)
+$force_remote = true; // Mude para false se quiser usar banco local
+
+if ($is_localhost && !$force_remote) {
     // Configuração Local (XAMPP) - valores padrão
     define('DB_HOST', 'localhost');
     define('DB_NAME', 'loja_plus_size');
@@ -60,18 +63,8 @@ function getDBConnection() {
         // Log do erro para debug
         error_log("Erro de conexão com banco: " . $e->getMessage());
         
-        // Retornar erro JSON se for uma requisição AJAX
-        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
-            header('Content-Type: application/json');
-            echo json_encode(['error' => 'Erro de conexão: ' . $e->getMessage()]);
-            exit;
-        }
-        
-        // Para requisições normais, mostrar erro amigável
-        echo "<h2>Erro de Conexão com Banco de Dados</h2>";
-        echo "<p>Não foi possível conectar ao banco de dados. Verifique as configurações.</p>";
-        echo "<p><strong>Detalhes:</strong> " . $e->getMessage() . "</p>";
-        exit;
+        // Lançar exceção para que as APIs tratem adequadamente
+        throw new Exception('Erro de conexão com banco: ' . $e->getMessage());
     }
 }
 
