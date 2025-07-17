@@ -1,11 +1,11 @@
 <?php
-// Loja Plus Size - Bella Curves
-// Página do Carrinho de Compras
+// Loja Plus Size - Carrinho de Compras
+// Gerenciamento do carrinho
 
 session_start();
 
 // Incluir configurações
-require_once '../config.php';
+require_once '../config_database.php';
 
 // Verificar conexão com banco
 try {

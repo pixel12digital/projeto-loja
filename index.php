@@ -3,12 +3,11 @@
 // Página Principal
 
 // Incluir configurações
-require_once 'config.php';
+require_once 'config_database.php';
 
 // Verificar se o banco está conectado
 try {
-    $pdo = new PDO("mysql:host=" . DB_HOSTNAME . ";dbname=" . DB_DATABASE, DB_USERNAME, DB_PASSWORD);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo = getDBConnection();
     $db_status = "✅ Conectado";
 } catch(PDOException $e) {
     $db_status = "❌ Erro: " . $e->getMessage();
@@ -178,8 +177,8 @@ try {
 
         <div class="status-card">
             <h3><i class="fas fa-tools"></i> Informações Técnicas</h3>
-            <p><strong>Host:</strong> <?php echo DB_HOSTNAME; ?></p>
-            <p><strong>Database:</strong> <?php echo DB_DATABASE; ?></p>
+            <p><strong>Host:</strong> <?php echo DB_HOST; ?></p>
+            <p><strong>Database:</strong> <?php echo DB_NAME; ?></p>
             <p><strong>PHP Version:</strong> <?php echo phpversion(); ?></p>
             <p><strong>Server:</strong> <?php echo $_SERVER['SERVER_SOFTWARE'] ?? 'Apache'; ?></p>
         </div>

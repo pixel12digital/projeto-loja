@@ -1,11 +1,11 @@
 <?php
-// Loja Plus Size - Bella Curves
-// Página Principal da Loja
+// Loja Plus Size - Catálogo de Produtos
+// Página principal da loja
 
 session_start();
 
 // Incluir configurações
-require_once '../config.php';
+require_once '../config_database.php';
 
 // Verificar conexão com banco
 try {

@@ -1,11 +1,11 @@
 <?php
-// Loja Plus Size - Bella Curves
-// Página de Checkout
+// Loja Plus Size - Checkout
+// Finalização da compra
 
 session_start();
 
 // Incluir configurações
-require_once '../config.php';
+require_once '../config_database.php';
 
 // Verificar se há produtos no carrinho
 if (empty($_SESSION['carrinho'])) {
