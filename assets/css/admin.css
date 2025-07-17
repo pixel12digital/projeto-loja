@@ -398,12 +398,23 @@ body {
     .desktop-quick-actions .left-actions {
         width: 100%;
         justify-content: center;
+        flex-direction: row;
+        gap: 0.5rem;
     }
     
     .desktop-quick-actions .right-actions {
         width: 100%;
         justify-content: center;
         font-size: 0.75rem;
+    }
+    
+    .quick-action-btn {
+        flex: 1;
+        justify-content: center;
+        text-align: center;
+        min-width: 0;
+        font-size: 0.75rem;
+        padding: 0.5rem 0.75rem;
     }
 }
 
