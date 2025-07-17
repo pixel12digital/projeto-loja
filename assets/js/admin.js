@@ -3,12 +3,12 @@
 
 // URLs das APIs
 const API_URLS = {
-    pedidos: 'pedidos_api.php',
-    produtos: 'produtos_api.php',
-    categorias: 'categorias_api.php',
-    clientes: 'clientes_api.php',
-    configuracoes: 'configuracoes_api.php',
-    dashboard: 'dashboard_api.php'
+    pedidos: 'admin/pedidos_api.php',
+    produtos: 'admin/produtos_api.php',
+    categorias: 'admin/categorias_api.php',
+    clientes: 'admin/clientes_api.php',
+    configuracoes: 'admin/configuracoes_api.php',
+    dashboard: 'admin/dashboard_api.php'
 };
 
 // Estado global da aplicação
