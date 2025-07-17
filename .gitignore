@@ -1,5 +1,5 @@
 # Arquivos de configuração sensíveis
-config_database.php
+# config_database.php - REMOVIDO: agora é versionado com configuração automática
 config.php
 
 # Logs

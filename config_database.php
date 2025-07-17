@@ -1,6 +1,6 @@
 <?php
 // Configuração do Banco de Dados - Loja Plus Size
-// COPIE ESTE ARQUIVO PARA config_database.php E CONFIGURE SUAS CREDENCIAIS
+// Funciona automaticamente em local e produção (Hostinger)
 
 // Detectar ambiente automaticamente
 $is_localhost = in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1']) || strpos($_SERVER['HTTP_HOST'], 'localhost') !== false;

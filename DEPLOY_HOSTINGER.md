@@ -1,226 +1,190 @@
-# 🚀 DEPLOY HOSTINGER - Guia Passo a Passo
+# 🚀 Guia de Deploy na Hostinger - Deploy Automático
 
-## 📋 **PREPARAÇÃO ANTES DO DEPLOY**
+Este guia mostra como fazer o deploy do projeto na Hostinger **sem precisar editar arquivos manualmente**.
 
-### ✅ **O que já está configurado:**
-- ✅ Banco de dados: `u819562010_lojaplussize`
-- ✅ Usuário: `u819562010_lojaplussize`
-- ✅ Senha: `Los@ngo081081`
-- ✅ Arquivos de configuração atualizados
-- ✅ Estrutura SQL completa pronta
+## ✅ Pré-requisitos
 
----
+- Conta na Hostinger com plano que suporte PHP e MySQL
+- Acesso ao painel da Hostinger (hPanel)
+- Acesso SSH (opcional, mas recomendado)
 
-## 🎯 **PASSO 1: ACESSO AO PAINEL HOSTINGER**
+## 📋 Passo a Passo
 
-1. **Acesse:** https://hpanel.hostinger.com
-2. **Login** com suas credenciais
-3. **Selecione** o site: `peru-turkey-621361.hostingersite.com`
+### 1. Preparar o Repositório
 
----
+Certifique-se de que o repositório está atualizado com as configurações automáticas:
 
-## 📊 **PASSO 2: CONFIGURAR BANCO DE DADOS**
-
-### **2.1 Acessar phpMyAdmin:**
-1. No painel Hostinger: **Bancos de Dados > Gerenciar**
-2. Clique em **Entrar no phpMyAdmin**
-3. Selecione banco: `u819562010_lojaplussize`
-
-### **2.2 Importar Estrutura:**
-1. No phpMyAdmin: **Importar**
-2. **Escolher arquivo:** `database.sql`
-3. **Executar** - Aguardar conclusão
-4. **Verificar:** Deve criar 13 tabelas + dados
-
-### **2.3 Verificar Importação:**
-```sql
--- Execute estas queries para validar:
-SHOW TABLES;
-SELECT COUNT(*) FROM produtos;
-SELECT COUNT(*) FROM categorias;
-```
-
----
-
-## 📁 **PASSO 3: UPLOAD DOS ARQUIVOS**
-
-### **3.1 Via File Manager (Recomendado):**
-1. **Website > File Manager**
-2. Navegue até: `/public_html/`
-3. **Upload** de toda pasta `loja-plus-size/`
-4. **Extrair** se necessário
-
-### **3.2 Via FTP (Alternativo):**
-```
-Host: peru-turkey-621361.hostingersite.com
-Usuário: [seu usuário FTP]
-Senha: [sua senha FTP]
-Pasta: /public_html/loja-plus-size/
-```
-
-### **3.3 Estrutura Final no Servidor:**
-```
-/public_html/
-└── loja-plus-size/
-    ├── admin/
-    ├── assets/
-    ├── config.php
-    ├── config_database.php
-    ├── database.sql
-    ├── index.php
-    └── README.md
-```
-
----
-
-## ⚙️ **PASSO 4: CONFIGURAR PERMISSÕES**
-
-### **4.1 Permissões Necessárias:**
 ```bash
-# Via File Manager (clique direito > Permissões):
-assets/         - 755
-assets/images/  - 755
-admin/          - 755
-
-# Ou via terminal se disponível:
-chmod -R 755 assets/
-chmod -R 755 admin/
+# Local
+git add .
+git commit -m "Configuração automática para deploy"
+git push origin main
 ```
+
+### 2. Acessar o Servidor
+
+#### Via SSH (Recomendado)
+```bash
+ssh u819562010@seudominio.com
+cd public_html
+```
+
+#### Via File Manager (Alternativo)
+- Acesse o hPanel da Hostinger
+- Vá em "Gerenciador de Arquivos"
+- Navegue até `public_html`
+
+### 3. Fazer Deploy
+
+#### Opção A: Clone via SSH
+```bash
+# Remover arquivos padrão (se existirem)
+rm -rf *
+
+# Clonar o repositório
+git clone https://github.com/seu-usuario/loja-plus-size.git .
+
+# Ou se preferir manter em subpasta:
+# git clone https://github.com/seu-usuario/loja-plus-size.git loja
+```
+
+#### Opção B: Upload via File Manager
+1. Baixe o ZIP do repositório no GitHub
+2. Faça upload via File Manager
+3. Extraia os arquivos
+
+### 4. Configurar Banco de Dados
+
+#### 4.1 Criar Banco de Dados
+1. No hPanel, vá em "Bancos de Dados" > "MySQL"
+2. Crie um novo banco de dados
+3. Anote as credenciais:
+   - **Host**: `auth-db1067.hstgr.io`
+   - **Nome**: `u819562010_lojaplussize`
+   - **Usuário**: `u819562010_lojaplussize`
+   - **Senha**: (a que você definiu)
+
+#### 4.2 Importar Estrutura
+1. Acesse o phpMyAdmin
+2. Selecione o banco criado
+3. Vá em "Importar"
+4. Selecione o arquivo `database.sql`
+5. Clique em "Executar"
+
+### 5. Configurar Variáveis de Ambiente
+
+#### 5.1 Via hPanel
+1. No hPanel, vá em "Configurações Avançadas" > "Variáveis de Ambiente"
+2. Adicione as seguintes variáveis:
+
+```
+DB_HOST=auth-db1067.hstgr.io
+DB_NAME=u819562010_lojaplussize
+DB_USER=u819562010_lojaplussize
+DB_PASS=sua_senha_aqui
+```
+
+#### 5.2 Via .htaccess (Alternativo)
+Se a Hostinger não suportar variáveis de ambiente, crie um arquivo `.htaccess`:
+
+```apache
+SetEnv DB_HOST auth-db1067.hstgr.io
+SetEnv DB_NAME u819562010_lojaplussize
+SetEnv DB_USER u819562010_lojaplussize
+SetEnv DB_PASS sua_senha_aqui
+```
+
+### 6. Configurar Permissões
+
+```bash
+# Via SSH
+chmod 755 uploads/
+chmod 755 uploads/products/
+chmod 755 uploads/clients/
+chmod 755 uploads/vendors/
+
+# Ou via File Manager
+# Clique com botão direito nas pastas e defina permissão 755
+```
+
+### 7. Testar o Site
+
+Acesse seu domínio:
+- **Site Principal**: https://seudominio.com/
+- **Loja**: https://seudominio.com/loja/
+- **Admin**: https://seudominio.com/admin/
+
+## 🔄 Atualizações Futuras
+
+### Via SSH (Recomendado)
+```bash
+# No servidor
+cd public_html
+git pull origin main
+```
+
+### Via File Manager
+1. Baixe a nova versão do GitHub
+2. Faça upload dos arquivos atualizados
+3. Substitua os arquivos existentes
+
+**Importante**: As variáveis de ambiente permanecem intactas após atualizações!
+
+## 🐛 Solução de Problemas
+
+### Erro 500
+1. **Verifique os logs**:
+   ```bash
+   # Via SSH
+   tail -f error_log
+   
+   # Ou no hPanel: Logs > Error Logs
+   ```
+
+2. **Verifique as variáveis de ambiente**:
+   ```php
+   // Adicione temporariamente no index.php
+   var_dump(getenv('DB_HOST'));
+   var_dump(getenv('DB_NAME'));
+   ```
+
+### Erro de Conexão com Banco
+1. Verifique se as credenciais estão corretas
+2. Verifique se o banco foi importado
+3. Teste a conexão via phpMyAdmin
+
+### Páginas não carregam
+1. Verifique se o mod_rewrite está habilitado
+2. Verifique as permissões dos arquivos
+3. Verifique se o PHP está na versão correta (7.4+)
+
+## 🔐 Segurança
+
+- ✅ Credenciais em variáveis de ambiente
+- ✅ Nenhuma senha no código
+- ✅ Configuração automática por ambiente
+- ✅ Arquivos sensíveis protegidos
+
+## 📞 Suporte
+
+Se encontrar problemas:
+
+1. **Verifique os logs de erro**
+2. **Teste localmente primeiro**
+3. **Compare com a configuração local**
+4. **Entre em contato com o suporte da Hostinger**
+
+## ✅ Checklist de Deploy
+
+- [ ] Repositório atualizado
+- [ ] Banco de dados criado
+- [ ] Estrutura importada
+- [ ] Variáveis de ambiente configuradas
+- [ ] Permissões definidas
+- [ ] Site testado
+- [ ] Admin funcionando
+- [ ] Loja funcionando
 
 ---
 
-## 🧪 **PASSO 5: TESTES DE FUNCIONAMENTO**
-
-### **5.1 Teste de Conexão:**
-1. **Acesse:** `https://peru-turkey-621361.hostingersite.com/loja-plus-size/config_database.php`
-2. **Deve aparecer:** ✅ Conexões funcionando!
-
-### **5.2 Teste da Loja:**
-1. **Frontend:** `https://peru-turkey-621361.hostingersite.com/loja-plus-size/`
-2. **Verificar:** 
-   - ✅ Página carrega
-   - ✅ Produtos aparecem
-   - ✅ Design está correto
-
-### **5.3 Teste do Admin:**
-1. **Admin:** `https://peru-turkey-621361.hostingersite.com/loja-plus-size/admin/`
-2. **Verificar:**
-   - ✅ Dashboard aparece
-   - ✅ Produtos listados
-   - ✅ Interface funcional
-
----
-
-## 🔧 **PASSO 6: CONFIGURAÇÕES FINAIS**
-
-### **6.1 Atualizar URLs nos Configs:**
-
-**Edite `config.php`:**
-```php
-define('HTTP_SERVER', 'https://peru-turkey-621361.hostingersite.com/loja-plus-size/');
-define('HTTPS_SERVER', 'https://peru-turkey-621361.hostingersite.com/loja-plus-size/');
-```
-
-**Edite `admin/config.php`:**
-```php
-define('HTTP_SERVER', 'https://peru-turkey-621361.hostingersite.com/loja-plus-size/admin/');
-define('HTTP_CATALOG', 'https://peru-turkey-621361.hostingersite.com/loja-plus-size/');
-```
-
-### **6.2 Configurar SSL:**
-1. **Painel Hostinger > SSL**
-2. **Ativar SSL gratuito**
-3. **Forçar HTTPS** (recomendado)
-
----
-
-## ✅ **CHECKLIST FINAL DE DEPLOY**
-
-```
-[ ] Banco criado e importado (13 tabelas)
-[ ] Arquivos enviados para servidor
-[ ] Permissões configuradas (755)
-[ ] URLs atualizadas nos configs
-[ ] Teste de conexão OK
-[ ] Frontend funcionando
-[ ] Admin panel funcionando
-[ ] SSL configurado
-[ ] Backup do banco feito
-```
-
----
-
-## 🆘 **SOLUÇÃO DE PROBLEMAS**
-
-### **❌ Erro de Conexão:**
-```php
-// Verifique em config.php:
-define('DB_HOSTNAME', 'localhost');  // Correto para Hostinger
-define('DB_USERNAME', 'u819562010_lojaplussize');
-define('DB_PASSWORD', 'Los@ngo081081');
-define('DB_DATABASE', 'u819562010_lojaplussize');
-```
-
-### **❌ Página em Branco:**
-1. **Ativar erros:** Adicione no início do `index.php`:
-```php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-```
-
-### **❌ Imagens não Carregam:**
-1. **Verificar permissões** da pasta `assets/images/`
-2. **Upload imagens reais** para substituir placeholders
-
-### **❌ Admin não Funciona:**
-1. **Verificar** se `admin/config.php` está correto
-2. **Limpar cache** do navegador
-3. **Testar** em navegador anônimo
-
----
-
-## 📱 **URLS FINAIS DE ACESSO**
-
-```
-🛍️  LOJA FRONTEND:
-https://peru-turkey-621361.hostingersite.com/loja-plus-size/
-
-⚙️  PAINEL ADMIN:
-https://peru-turkey-621361.hostingersite.com/loja-plus-size/admin/
-
-🧪  TESTE CONEXÃO:
-https://peru-turkey-621361.hostingersite.com/loja-plus-size/config_database.php
-```
-
----
-
-## 💾 **BACKUP E MANUTENÇÃO**
-
-### **Backup Regular:**
-```sql
--- Via phpMyAdmin: Exportar > SQL
--- Arquivo: backup_loja_YYYYMMDD.sql
-```
-
-### **Monitoramento:**
-```sql
--- Verificar produtos
-SELECT COUNT(*) FROM produtos WHERE status = 'ativo';
-
--- Verificar pedidos (quando houver)
-SELECT COUNT(*) FROM pedidos WHERE DATE(created_at) = CURDATE();
-```
-
----
-
-## 🎉 **DEPLOY CONCLUÍDO!**
-
-Após seguir todos os passos, sua **Loja Plus Size** estará:
-
-- ✅ **Online** e funcionando
-- ✅ **Banco** configurado com produtos
-- ✅ **Admin** pronto para gestão
-- ✅ **SSL** ativo e seguro
-- ✅ **Pronta** para receber clientes!
-
-**🚀 Boa sorte com sua loja Plus Size!** 
+**🎉 Parabéns! Seu site está no ar com deploy automático!** 

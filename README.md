@@ -1,136 +1,196 @@
-# 🛍️ Loja Plus Size - E-commerce Bella Curves
+# Loja Plus Size - E-commerce Platform
 
-Um sistema de e-commerce completo desenvolvido em PHP, com painel administrativo robusto e front-end responsivo.
+Sistema de e-commerce completo com painel administrativo, carrinho de compras e integração com banco de dados.
 
-## ✨ Funcionalidades Implementadas
+## 🚀 URLs de Acesso
 
-### 🎛️ **Painel Administrativo**
-- ✅ Dashboard com estatísticas em tempo real
-- ✅ Gestão completa de produtos (CRUD)
-- ✅ Gestão de categorias
-- ✅ Gestão de pedidos
-- ✅ Gestão de clientes
-- ✅ Configurações do sistema
-- ✅ Sistema de notificações
-- ✅ Interface responsiva e moderna
+### Ambiente Local (XAMPP)
+- **Site Principal**: http://localhost/projeto-ecommerce/loja-plus-size/
+- **Loja**: http://localhost/projeto-ecommerce/loja-plus-size/loja/
+- **Admin**: http://localhost/projeto-ecommerce/loja-plus-size/admin/
+- **Carrinho**: http://localhost/projeto-ecommerce/loja-plus-size/loja/carrinho.php
 
-### 🛒 **Loja Pública**
-- ✅ Listagem de produtos
-- ✅ Página individual de produto
-- ✅ Carrinho de compras
-- ✅ Checkout básico
-- ✅ Layout responsivo
+### Produção (Hostinger)
+- **Site Principal**: https://seudominio.com/
+- **Loja**: https://seudominio.com/loja/
+- **Admin**: https://seudominio.com/admin/
+- **Carrinho**: https://seudominio.com/loja/carrinho.php
 
-### 🗄️ **Banco de Dados**
-- ✅ Estrutura completa e otimizada
-- ✅ Dados de exemplo incluídos
-- ✅ Configuração automática local/produção
+## 📋 Pré-requisitos
 
-## 🚀 Instalação
+- PHP 7.4 ou superior
+- MySQL 5.7 ou superior
+- Servidor web (Apache/Nginx)
+- XAMPP (para desenvolvimento local)
 
-### **Local (XAMPP)**
+## 🛠️ Instalação
+
+### 1. Clone o repositório
 ```bash
-# 1. Clone o projeto
-git clone [url-do-repositorio]
-
-# 2. Configure o banco
-# - Inicie XAMPP (Apache + MySQL)
-# - Crie banco 'loja_plus_size'
-# - Importe database.sql
-
-# 3. Acesse
-# Loja: http://localhost/projeto-ecommerce/loja-plus-size/loja/
-# Admin: http://localhost/projeto-ecommerce/loja-plus-size/admin/
+git clone https://github.com/seu-usuario/loja-plus-size.git
+cd loja-plus-size
 ```
 
-### **Produção (Hostinger)**
-Veja o guia completo: [INSTALACAO.md](INSTALACAO.md)
+### 2. Configuração do Banco de Dados
+
+#### Local (XAMPP)
+1. Inicie o XAMPP (Apache e MySQL)
+2. Crie o banco de dados:
+```sql
+CREATE DATABASE loja_plus_size;
+```
+3. Importe o arquivo `database.sql` no phpMyAdmin
+
+#### Produção (Hostinger)
+1. Acesse o painel da Hostinger
+2. Crie um banco de dados MySQL
+3. Importe o arquivo `database.sql` via phpMyAdmin
+4. Configure as variáveis de ambiente no painel da Hostinger:
+   - `DB_HOST`: host do banco (ex: auth-db1067.hstgr.io)
+   - `DB_NAME`: nome do banco (ex: u819562010_lojaplussize)
+   - `DB_USER`: usuário do banco (ex: u819562010_lojaplussize)
+   - `DB_PASS`: senha do banco
+
+### 3. Configuração Automática
+
+O sistema detecta automaticamente se está rodando localmente ou em produção:
+
+- **Local**: Usa configurações padrão do XAMPP
+- **Produção**: Usa variáveis de ambiente da Hostinger
+
+**Não é necessário editar arquivos de configuração manualmente!**
+
+### 4. Permissões (Linux/Mac)
+```bash
+chmod 755 uploads/
+chmod 755 uploads/products/
+chmod 755 uploads/clients/
+chmod 755 uploads/vendors/
+```
+
+## 🔧 Configuração das Variáveis de Ambiente (Hostinger)
+
+1. Acesse o painel da Hostinger
+2. Vá em "Configurações Avançadas" > "Variáveis de Ambiente"
+3. Adicione as seguintes variáveis:
+   ```
+   DB_HOST=auth-db1067.hstgr.io
+   DB_NAME=u819562010_lojaplussize
+   DB_USER=u819562010_lojaplussize
+   DB_PASS=sua_senha_aqui
+   ```
 
 ## 📁 Estrutura do Projeto
 
 ```
 loja-plus-size/
-├── admin/                    # Painel administrativo
-│   ├── index.php            # Dashboard principal
-│   ├── produtos_api.php     # API de produtos
-│   ├── pedidos_api.php      # API de pedidos
+├── admin/                 # Painel administrativo
+│   ├── index.php         # Dashboard principal
+│   ├── products/         # Gerenciamento de produtos
+│   ├── orders/           # Gerenciamento de pedidos
 │   └── ...
-├── loja/                     # Front-end da loja
-│   ├── index.php            # Listagem de produtos
-│   ├── produto.php          # Página do produto
-│   ├── carrinho.php         # Carrinho de compras
-│   └── checkout.php         # Finalização da compra
-├── assets/                   # Recursos estáticos
-│   ├── css/                 # Estilos
-│   ├── js/                  # JavaScript
-│   └── img/                 # Imagens
-├── uploads/                  # Uploads de usuários
-├── config_database.php      # Configuração do banco
-├── database.sql             # Estrutura do banco
-└── README.md                # Este arquivo
+├── loja/                 # Frontend da loja
+│   ├── index.php         # Catálogo de produtos
+│   ├── carrinho.php      # Carrinho de compras
+│   └── ...
+├── api/                  # APIs REST
+│   ├── products.php      # API de produtos
+│   ├── orders.php        # API de pedidos
+│   └── ...
+├── uploads/              # Uploads de imagens
+├── config_database.php   # Configuração automática do banco
+└── database.sql          # Estrutura do banco
 ```
 
-## 🛠️ Tecnologias Utilizadas
+## 🚀 Deploy Automático
 
-- **Backend**: PHP 7.4+, PDO, MySQL
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Banco**: MySQL 5.7+ / MariaDB 10.2+
-- **Servidor**: Apache/Nginx
+### Primeira vez na Hostinger:
+1. Clone o repositório no servidor
+2. Configure as variáveis de ambiente no painel
+3. Importe o banco de dados
+4. Pronto! O site funcionará automaticamente
 
-## 📊 Status do Projeto
+### Atualizações:
+```bash
+# No servidor Hostinger
+git pull origin main
+```
+**Não é necessário reconfigurar nada!** O sistema detecta automaticamente o ambiente.
 
-- **Versão**: 1.0
-- **Status**: Em desenvolvimento ativo
-- **Progresso**: 13.3% completo
+## 🔐 Segurança
 
-Veja o roadmap completo: [ROADMAP_ECOMMERCE.md](ROADMAP_ECOMMERCE.md)
+- Credenciais de produção são armazenadas em variáveis de ambiente
+- Nenhuma senha fica exposta no código
+- Configuração automática por ambiente
 
-## 🔧 Configuração
+## 📊 Funcionalidades
 
-### **Ambiente Local**
-O projeto detecta automaticamente se está rodando em localhost e usa as configurações apropriadas.
+### Painel Administrativo
+- ✅ Dashboard com estatísticas
+- ✅ Gerenciamento de produtos (CRUD completo)
+- ✅ Gerenciamento de pedidos
+- ✅ Gerenciamento de categorias
+- ✅ Gerenciamento de clientes
+- ✅ Relatórios de vendas
+- ✅ Configurações do sistema
 
-### **Ambiente de Produção**
-1. Copie `config_database.example.php` para `config_database.php`
-2. Configure suas credenciais de banco de dados
-3. Importe o arquivo `database.sql`
+### Loja (Frontend)
+- ✅ Catálogo de produtos
+- ✅ Carrinho de compras
+- ✅ Sistema de checkout
+- ✅ Histórico de pedidos
+- ✅ Páginas de produto individuais
 
-## 🎯 Próximas Implementações
+### APIs
+- ✅ API REST para produtos
+- ✅ API REST para pedidos
+- ✅ API REST para categorias
+- ✅ API REST para clientes
+- ✅ API REST para dashboard
 
-1. **Galeria de imagens avançada** na página de produto
-2. **Sistema de cadastro/login** para clientes
-3. **Integração de pagamentos** (PIX)
-4. **Cálculo de frete** com Correios
-5. **E-mails transacionais**
+## 🐛 Solução de Problemas
 
-## 📝 Changelog
+### Erro 500
+1. Verifique se as variáveis de ambiente estão configuradas (Hostinger)
+2. Verifique se o banco de dados foi importado
+3. Verifique os logs de erro do servidor
 
-### **v1.0 (17/07/2025)**
-- ✅ Sistema base implementado
-- ✅ Painel admin funcional
-- ✅ Loja pública básica
-- ✅ Banco de dados estruturado
-- ✅ Página de produto individual
-- ✅ Roadmap de desenvolvimento criado
+### Erro de Conexão com Banco
+1. Verifique se o MySQL está rodando (local)
+2. Verifique as credenciais do banco
+3. Verifique se o banco de dados existe
+
+### Páginas não carregam
+1. Verifique se o Apache está rodando
+2. Verifique as permissões dos arquivos
+3. Verifique se o mod_rewrite está habilitado
+
+## 📝 Logs de Alterações
+
+### v2.0 - Deploy Automático
+- ✅ Configuração automática por ambiente
+- ✅ Variáveis de ambiente para produção
+- ✅ Deploy sem configuração manual
+- ✅ Segurança aprimorada
+
+### v1.0 - Funcionalidades Básicas
+- ✅ Painel administrativo completo
+- ✅ Sistema de e-commerce básico
+- ✅ APIs REST funcionais
+- ✅ Interface responsiva
 
 ## 🤝 Contribuição
 
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature
+3. Commit suas mudanças
+4. Push para a branch
 5. Abra um Pull Request
 
 ## 📄 Licença
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
 ## 📞 Suporte
 
-- **Documentação**: [INSTALACAO.md](INSTALACAO.md)
-- **Roadmap**: [ROADMAP_ECOMMERCE.md](ROADMAP_ECOMMERCE.md)
-- **Issues**: Use o sistema de issues do GitHub
-
----
-
-**Desenvolvido com ❤️ para a Bella Curves** 
+Para suporte, entre em contato através do painel administrativo ou abra uma issue no GitHub. 
