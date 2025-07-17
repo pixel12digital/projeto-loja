@@ -10,6 +10,7 @@ Sistema de e-commerce completo com painel administrativo, carrinho de compras e 
 - **Admin**: http://localhost/projeto-ecommerce/loja-plus-size/admin/
 - **Carrinho**: http://localhost/projeto-ecommerce/loja-plus-size/loja/carrinho.php
 - **Teste de Navegação**: http://localhost/projeto-ecommerce/loja-plus-size/test_navigation.php
+- **Teste Header Mobile**: http://localhost/projeto-ecommerce/loja-plus-size/test_mobile_header.php
 
 ### Produção (Hostinger)
 - **Site Principal**: https://seudominio.com/
@@ -17,6 +18,7 @@ Sistema de e-commerce completo com painel administrativo, carrinho de compras e 
 - **Admin**: https://seudominio.com/admin/
 - **Carrinho**: https://seudominio.com/loja/carrinho.php
 - **Teste de Navegação**: https://seudominio.com/test_navigation.php
+- **Teste Header Mobile**: https://seudominio.com/test_mobile_header.php
 
 ## 📋 Pré-requisitos
 
@@ -206,6 +208,12 @@ Acesse `test_navigation.php` para testar todas as funcionalidades de navegação
 3. Verifique se o mod_rewrite está habilitado
 
 ## 📝 Logs de Alterações
+
+### v3.1 - Correção Header Mobile
+- ✅ Corrigido posicionamento dos atalhos rápidos no mobile
+- ✅ Header reorganizado em 3 seções: título, atalhos, notificações
+- ✅ Layout vertical no mobile com separadores visuais
+- ✅ Teste específico para header mobile implementado
 
 ### v3.0 - Navegação Responsiva
 - ✅ Navegação responsiva com sidebar mobile
