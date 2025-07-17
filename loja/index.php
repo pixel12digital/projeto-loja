@@ -9,8 +9,7 @@ require_once '../config_database.php';
 
 // Verificar conexão com banco
 try {
-    $pdo = new PDO("mysql:host=" . DB_HOSTNAME . ";dbname=" . DB_DATABASE, DB_USERNAME, DB_PASSWORD);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo = getDBConnection();
     
     // Buscar produtos do banco
     $stmt = $pdo->query("SELECT * FROM produtos ORDER BY id DESC LIMIT 12");

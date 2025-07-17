@@ -15,7 +15,7 @@ if (empty($_SESSION['carrinho'])) {
 
 // Verificar conexão com banco
 try {
-    $pdo = new PDO("mysql:host=" . DB_HOSTNAME . ";dbname=" . DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+    $pdo = getDBConnection();
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch(PDOException $e) {
     $error = "Erro de conexão: " . $e->getMessage();
