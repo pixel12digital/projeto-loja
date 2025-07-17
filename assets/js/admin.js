@@ -32,6 +32,7 @@ function initSidebar() {
     const contentSections = document.querySelectorAll('.content-wrapper');
     const sidebarToggle = document.querySelector('.sidebar-toggle');
     const sidebar = document.querySelector('.sidebar');
+    const sidebarOverlay = document.querySelector('.sidebar-overlay');
 
     // Handle sidebar navigation
     sidebarLinks.forEach(link => {
@@ -57,15 +58,19 @@ function initSidebar() {
             if (targetSection) {
                 targetSection.style.display = 'block';
                 
-                // Update header title
-                const headerTitle = document.querySelector('.header-left h1');
-                const sectionTitle = this.querySelector('span').textContent;
-                headerTitle.textContent = sectionTitle;
+                // Update header title and breadcrumbs
+                updateHeaderInfo(this);
                 
                 // Load section data
                 const section = href.replace('#', '');
                 currentSection = section;
                 loadSectionData(section);
+                
+                // Close sidebar on mobile
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.remove('open');
+                }
             }
         });
     });
@@ -74,6 +79,15 @@ function initSidebar() {
     if (sidebarToggle) {
         sidebarToggle.addEventListener('click', function() {
             sidebar.classList.toggle('open');
+            sidebarOverlay.classList.toggle('open');
+        });
+    }
+
+    // Close sidebar when clicking overlay
+    if (sidebarOverlay) {
+        sidebarOverlay.addEventListener('click', function() {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('open');
         });
     }
 
@@ -82,9 +96,119 @@ function initSidebar() {
         if (window.innerWidth <= 768) {
             if (!sidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
                 sidebar.classList.remove('open');
+                sidebarOverlay.classList.remove('open');
             }
         }
     });
+
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            sidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('open');
+        }
+    });
+}
+
+// Update header information (title and breadcrumbs)
+function updateHeaderInfo(linkElement) {
+    const headerTitle = document.querySelector('.header-left h1');
+    const breadcrumbs = document.querySelector('.breadcrumbs');
+    const sectionTitle = linkElement.querySelector('span').textContent;
+    
+    // Update title
+    headerTitle.textContent = sectionTitle;
+    
+    // Update breadcrumbs
+    if (breadcrumbs) {
+        const section = linkElement.getAttribute('href').replace('#', '');
+        let breadcrumbHTML = '<a href="#dashboard">Dashboard</a>';
+        
+        if (section !== 'dashboard') {
+            breadcrumbHTML += '<span class="separator">/</span>';
+            breadcrumbHTML += `<span class="current">${sectionTitle}</span>`;
+        } else {
+            breadcrumbHTML += '<span class="separator">/</span>';
+            breadcrumbHTML += '<span class="current">Visão Geral</span>';
+        }
+        
+        breadcrumbs.innerHTML = breadcrumbHTML;
+    }
+    
+    // Update quick actions based on section
+    updateQuickActions(section);
+}
+
+// Update quick actions based on current section
+function updateQuickActions(section) {
+    const quickActions = document.querySelector('.quick-actions');
+    if (!quickActions) return;
+    
+    let actionsHTML = '';
+    
+    switch(section) {
+        case 'dashboard':
+            actionsHTML = `
+                <a href="#produtos" class="quick-action-btn">
+                    <i class="fas fa-plus"></i>
+                    Novo Produto
+                </a>
+                <a href="#pedidos" class="quick-action-btn primary">
+                    <i class="fas fa-eye"></i>
+                    Ver Pedidos
+                </a>
+            `;
+            break;
+        case 'produtos':
+            actionsHTML = `
+                <a href="#" onclick="showAddProduct()" class="quick-action-btn primary">
+                    <i class="fas fa-plus"></i>
+                    Novo Produto
+                </a>
+                <a href="#" onclick="exportProducts()" class="quick-action-btn">
+                    <i class="fas fa-download"></i>
+                    Exportar
+                </a>
+            `;
+            break;
+        case 'pedidos':
+            actionsHTML = `
+                <a href="#" onclick="showAddOrder()" class="quick-action-btn primary">
+                    <i class="fas fa-plus"></i>
+                    Novo Pedido
+                </a>
+                <a href="#" onclick="exportOrders()" class="quick-action-btn">
+                    <i class="fas fa-download"></i>
+                    Exportar
+                </a>
+            `;
+            break;
+        case 'clientes':
+            actionsHTML = `
+                <a href="#" onclick="showAddCustomer()" class="quick-action-btn primary">
+                    <i class="fas fa-plus"></i>
+                    Novo Cliente
+                </a>
+                <a href="#" onclick="exportCustomers()" class="quick-action-btn">
+                    <i class="fas fa-download"></i>
+                    Exportar
+                </a>
+            `;
+            break;
+        default:
+            actionsHTML = `
+                <a href="#produtos" class="quick-action-btn">
+                    <i class="fas fa-plus"></i>
+                    Novo Produto
+                </a>
+                <a href="#pedidos" class="quick-action-btn primary">
+                    <i class="fas fa-eye"></i>
+                    Ver Pedidos
+                </a>
+            `;
+    }
+    
+    quickActions.innerHTML = actionsHTML;
 }
 
 // Modal Management
@@ -1436,6 +1560,31 @@ function handleLogout() {
             window.location.href = '../';
         }, 1000);
     }
+}
+
+// Funções de exportação para atalhos rápidos
+function exportProducts() {
+    showNotification('Exportando produtos...', 'info');
+    // Implementar exportação de produtos
+    setTimeout(() => {
+        showNotification('Produtos exportados com sucesso!', 'success');
+    }, 2000);
+}
+
+function exportOrders() {
+    showNotification('Exportando pedidos...', 'info');
+    // Implementar exportação de pedidos
+    setTimeout(() => {
+        showNotification('Pedidos exportados com sucesso!', 'success');
+    }, 2000);
+}
+
+function exportCustomers() {
+    showNotification('Exportando clientes...', 'info');
+    // Implementar exportação de clientes
+    setTimeout(() => {
+        showNotification('Clientes exportados com sucesso!', 'success');
+    }, 2000);
 }
 
 // Auto-save drafts (simulation)

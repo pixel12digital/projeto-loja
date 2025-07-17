@@ -10,6 +10,9 @@
 </head>
 <body>
     <div class="admin-layout">
+        <!-- Sidebar Overlay (Mobile) -->
+        <div class="sidebar-overlay"></div>
+        
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
@@ -79,9 +82,26 @@
                     <button class="sidebar-toggle">
                         <i class="fas fa-bars"></i>
                     </button>
-                    <h1>Dashboard</h1>
+                    <div>
+                        <h1>Dashboard</h1>
+                        <div class="breadcrumbs">
+                            <a href="#dashboard">Dashboard</a>
+                            <span class="separator">/</span>
+                            <span class="current">Visão Geral</span>
+                        </div>
+                    </div>
                 </div>
                 <div class="header-right">
+                    <div class="quick-actions">
+                        <a href="#produtos" class="quick-action-btn">
+                            <i class="fas fa-plus"></i>
+                            Novo Produto
+                        </a>
+                        <a href="#pedidos" class="quick-action-btn primary">
+                            <i class="fas fa-eye"></i>
+                            Ver Pedidos
+                        </a>
+                    </div>
                     <div class="notification-bell">
                         <i class="fas fa-bell"></i>
                         <span class="notification-count">3</span>
